@@ -22,6 +22,7 @@ services:
       PLAYER_IDLE_TIMEOUT: 30
       OPS: |
         .SOSkr
+        SrSOSkr
       WORLD: /worlds
       ENFORCE_SECURE_PROFILE: "false"
       # FORCE_WORLD_COPY: "TRUE"
