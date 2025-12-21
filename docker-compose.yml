@@ -37,6 +37,8 @@ services:
     stdin_open: true
     tty: true
     restart: unless-stopped
+    networks:
+      - mcnet
 
   backups:
     image: itzg/mc-backup
@@ -62,6 +64,12 @@ services:
     volumes:
       - data:/data:ro
       - mc-backups:/backups
+    networks:
+      - mcnet
 volumes:
   data: {}
   mc-backups: {}
+
+networks:
+  mcnet:
+    driver: bridge
