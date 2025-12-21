@@ -42,7 +42,6 @@ services:
 
   backups:
     image: itzg/mc-backup
-    user: "1000"
     depends_on:
       mc:
         condition: service_healthy
