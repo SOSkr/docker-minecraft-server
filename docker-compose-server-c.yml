@@ -20,9 +20,6 @@ services:
       MAX_PLAYERS: ${MC_MAX_PLAYERS:-15}
       ONLINE_MODE: "true"
       PLAYER_IDLE_TIMEOUT: 30
-      OPS: |
-        .SOSkr
-        SrSOSkr
       WORLD: /worlds-community
       ENFORCE_SECURE_PROFILE: "false"
     ports:
