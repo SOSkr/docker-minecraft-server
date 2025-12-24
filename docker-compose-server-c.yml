@@ -1,0 +1,74 @@
+services:
+  mc-community:
+    image: itzg/minecraft-server
+    user: "1000"
+    environment:
+      VERSION: ${MC_VERSION:-1.21.10}
+      EULA: "true"
+      MOTD: |
+        ${MC_MOTD:-Rivalez Community - Servidor de la Comunidad
+        ¡Únete y juega con otros miembros de la comunidad!}
+      TYPE: ${MC_TYPE:-PAPER}
+      MEMORY: ${MC_MEMORY:-6G}
+      PLUGINS: |
+        /data/plugins-jars/Geyser-Spigot.jar
+        /data/plugins-jars/floodgate-spigot.jar
+      SERVER_NAME: ${MC_SERVER_NAME:-Rivalez Community}
+      GAMEMODE: ${MC_GAMEMODE:-survival}
+      DIFFICULTY: ${MC_DIFFICULTY:-hard}
+      ALLOW_CHEATS: "false"
+      MAX_PLAYERS: ${MC_MAX_PLAYERS:-15}
+      ONLINE_MODE: "true"
+      PLAYER_IDLE_TIMEOUT: 30
+      OPS: |
+        .SOSkr
+        SrSOSkr
+      WORLD: /worlds-community
+      ENFORCE_SECURE_PROFILE: "false"
+    ports:
+      - "${MC_PORT:-25566}:25565"
+      - "${MC_BEDROCK_PORT:-19133}:19132/udp"
+    volumes:
+      - data-community:/data
+      - /home/minecraft/javaworld-community:/worlds-community:ro,z
+      - /home/minecraft/plugins/jars:/data/plugins-jars
+      - /home/minecraft/plugins/configs:/data/plugins
+    stdin_open: true
+    tty: true
+    restart: unless-stopped
+    networks:
+      - mcnet-community
+
+  backups-community:
+    image: itzg/mc-backup
+    depends_on:
+      mc-community:
+        condition: service_healthy
+    environment:
+      BACKUP_INTERVAL: ${BACKUP_INTERVAL:-24h}
+      RCON_HOST: mc-community
+      INITIAL_DELAY: 0
+      TZ: "America/Bogota"
+      PRUNE_BACKUPS_DAYS: ${PRUNE_DAYS:-7}
+      LINK_LATEST: "true"
+      PRE_BACKUP_SCRIPT: |
+        rcon-cli say [BACKUP] Iniciando respaldo del mundo...
+      POST_BACKUP_SCRIPT: |
+        if [ "$1" -eq 0 ]; then
+          rcon-cli say "[BACKUP] Respaldo completado exitosamente."
+        else
+          rcon-cli say "[BACKUP] Respaldo falló."
+        fi
+    volumes:
+      - data-community:/data:ro
+      - mc-backups-community:/backups
+    networks:
+      - mcnet-community
+
+volumes:
+  data-community: {}
+  mc-backups-community: {}
+
+networks:
+  mcnet-community:
+    driver: bridge
