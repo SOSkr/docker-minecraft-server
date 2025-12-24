@@ -6,8 +6,8 @@ services:
       VERSION: ${MC_VERSION:-1.21.10}
       EULA: "true"
       MOTD: |
-        ${MC_MOTD:-Rivalez Community - Servidor de la Comunidad
-        ¡Únete y juega con otros miembros de la comunidad!}
+        Rivalez Community - Servidor de la Comunidad
+        ¡Únete y juega con otros miembros de la comunidad!
       TYPE: ${MC_TYPE:-PAPER}
       MEMORY: ${MC_MEMORY:-6G}
       PLUGINS: |
