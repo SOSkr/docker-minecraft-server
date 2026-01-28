@@ -1,5 +1,5 @@
 services:
-  mc:
+  mc-server:
     image: itzg/minecraft-server
     user: "1000"
     environment:
@@ -9,8 +9,6 @@ services:
         Rivalez Test - Servidor de Pruebas
       TYPE: ${MC_TYPE:-FABRIC}
       MEMORY: ${MC_MEMORY:-2G}
-      PLUGINS: |
-        https://download.geysermc.org/v2/projects/geyser/versions/latest/builds/latest/downloads/fabric
       SERVER_NAME: "Rivalez Test"
       GAMEMODE: "survival"
       DIFFICULTY: "hard"
@@ -30,7 +28,6 @@ services:
       # FORCE_WORLD_COPY: "TRUE"
     ports:
       - "${MC_PORT:-25569}:25565"
-      - "${MC_BEDROCK_PORT:-19139}:19132/udp"
     volumes:
       - data:/data
       - /home/minecraft/javaworld:/worlds:ro,z
@@ -42,6 +39,23 @@ services:
     networks:
       - mcnet
 
+    viaproxy:
+      image: ghcr.io/viaversion/viaproxy:latest
+      ports:
+        - "${MC_BEDROCK_PORT:-19139}:25568/udp"
+      volumes:
+        - data:/data:ro
+        - ./plugins/viaproxy:/app/run
+        # - ./scripts/pre-viaproxy-tasks.sh:/pre-viaproxy-tasks.sh:ro
+      stdin_open: true
+      tty: true
+      restart: unless-stopped
+      networks:
+        - mcnet
+      #entrypoint: ["/pre-viaproxy-tasks.sh"]
+      depends_on:
+        mc-server:
+          condition: service_healthy
 volumes:
   data: {}
 
