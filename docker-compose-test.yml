@@ -10,8 +10,7 @@ services:
       TYPE: ${MC_TYPE:-FABRIC}
       MEMORY: ${MC_MEMORY:-2G}
       PLUGINS: |
-        https://download.geysermc.org/v2/projects/geyser/versions/latest/builds/latest/downloads/spigot
-        https://download.geysermc.org/v2/projects/floodgate/versions/latest/builds/latest/downloads/spigot
+        https://download.geysermc.org/v2/projects/geyser/versions/latest/builds/latest/downloads/fabric
       SERVER_NAME: "Rivalez Test"
       GAMEMODE: "survival"
       DIFFICULTY: "hard"
@@ -21,6 +20,7 @@ services:
       PLAYER_IDLE_TIMEOUT: 30
       MODRINTH_PROJECTS: |
         fabric-api
+        floodgate
       VERSION_FROM_MODRINTH_PROJECTS: false
       # OPS: |
       #   .SOSkr
