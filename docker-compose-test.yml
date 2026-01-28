@@ -39,23 +39,24 @@ services:
     networks:
       - mcnet
 
-    viaproxy:
-      image: ghcr.io/viaversion/viaproxy:latest
-      ports:
-        - "${MC_BEDROCK_PORT:-19139}:25568/udp"
-      volumes:
-        - data:/data:ro
-        - ./plugins/viaproxy:/app/run
-        # - ./scripts/pre-viaproxy-tasks.sh:/pre-viaproxy-tasks.sh:ro
-      stdin_open: true
-      tty: true
-      restart: unless-stopped
-      networks:
-        - mcnet
-      #entrypoint: ["/pre-viaproxy-tasks.sh"]
-      depends_on:
-        mc-server:
-          condition: service_healthy
+  viaproxy:
+    image: ghcr.io/viaversion/viaproxy:latest
+    ports:
+      - "${MC_BEDROCK_PORT:-19139}:25568/udp"
+    volumes:
+      - data:/data:ro
+      - ./plugins/viaproxy:/app/run
+      # - ./scripts/pre-viaproxy-tasks.sh:/pre-viaproxy-tasks.sh:ro
+    stdin_open: true
+    tty: true
+    restart: unless-stopped
+    networks:
+      - mcnet
+    #entrypoint: ["/pre-viaproxy-tasks.sh"]
+    depends_on:
+      mc-server:
+        condition: service_healthy
+
 volumes:
   data: {}
 
