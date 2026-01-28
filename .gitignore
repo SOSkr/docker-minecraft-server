@@ -4,3 +4,5 @@
 *.iml
 /gh-md-toc
 personal-build-and-develop.*
+
+plugins/viaproxy/logs/

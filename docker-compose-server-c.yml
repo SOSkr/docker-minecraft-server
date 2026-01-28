@@ -3,16 +3,13 @@ services:
     image: itzg/minecraft-server
     user: "1000"
     environment:
-      VERSION: ${MC_VERSION:-1.21.10}
+      VERSION: ${MC_VERSION:-1.21.4}
       EULA: "true"
       MOTD: |
         Rivalez Community - Servidor de la Comunidad
         ¡Únete y juega con otros miembros de la comunidad!
-      TYPE: ${MC_TYPE:-PAPER}
+      TYPE: ${MC_TYPE:-FABRIC}
       MEMORY: ${MC_MEMORY:-6G}
-      PLUGINS: |
-        /data/plugins-jars/Geyser-Spigot.jar
-        /data/plugins-jars/floodgate-spigot.jar
       SERVER_NAME: ${MC_SERVER_NAME:-Rivalez Community}
       GAMEMODE: ${MC_GAMEMODE:-survival}
       DIFFICULTY: ${MC_DIFFICULTY:-hard}
@@ -22,19 +19,40 @@ services:
       PLAYER_IDLE_TIMEOUT: 30
       WORLD: /worlds-community
       ENFORCE_SECURE_PROFILE: "false"
+      MODRINTH_PROJECTS: |
+        fabric-api
+        floodgate
+      VERSION_FROM_MODRINTH_PROJECTS: false
     ports:
       - "${MC_PORT:-25566}:25565"
-      - "${MC_BEDROCK_PORT:-19133}:19132/udp"
     volumes:
       - data-community:/data
       - /home/minecraft/javaworld-community:/worlds-community:ro,z
-      - /home/minecraft/plugins/jars:/data/plugins-jars
-      - /home/minecraft/plugins/configs:/data/plugins
+      # - /home/minecraft/plugins/jars:/data/plugins-jars
+      # - /home/minecraft/plugins/configs:/data/plugins
     stdin_open: true
     tty: true
     restart: unless-stopped
     networks:
       - mcnet-community
+
+  viaproxy:
+    image: ghcr.io/viaversion/viaproxy:latest
+    ports:
+      - "${MC_BEDROCK_PORT:-25568}:25568/udp"
+    volumes:
+      - data-community:/data:ro
+      - ./plugins/viaproxy:/app/run
+      # - ./scripts/pre-viaproxy-tasks.sh:/pre-viaproxy-tasks.sh:ro
+    stdin_open: true
+    tty: true
+    restart: unless-stopped
+    networks:
+      - mcnet-community
+    #entrypoint: ["/pre-viaproxy-tasks.sh"]
+    depends_on:
+      mc-community:
+        condition: service_healthy
 
   backups-community:
     image: itzg/mc-backup
