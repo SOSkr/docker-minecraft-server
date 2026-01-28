@@ -14,7 +14,7 @@ services:
       DIFFICULTY: "hard"
       ALLOW_CHEATS: "false"
       MAX_PLAYERS: 15
-      ONLINE_MODE: "true"
+      ONLINE_MODE: "false"
       PLAYER_IDLE_TIMEOUT: 30
       MODRINTH_PROJECTS: |
         fabric-api
