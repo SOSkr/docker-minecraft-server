@@ -42,7 +42,7 @@ services:
   viaproxy:
     image: ghcr.io/viaversion/viaproxy:latest
     ports:
-      - "${MC_BEDROCK_PORT:-19139}:25568/udp"
+      - "${MC_BEDROCK_PORT:-19139}:19132/udp"
     volumes:
       - data:/data:ro
       - ./plugins/viaproxy:/app/run
