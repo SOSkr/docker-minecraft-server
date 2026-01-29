@@ -1,0 +1,6 @@
+# The secret key used to verify the servers. Paste this key into the auth_hook.properties config file on your server.
+secret-key: 9f96778021054c4481edcedf83bd7d3e
+
+# The address AuthHook should listen for HTTP requests.
+# This option is not reloadable.
+bind-address: 127.0.0.1:8080

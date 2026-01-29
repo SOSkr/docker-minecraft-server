@@ -6,3 +6,5 @@
 personal-build-and-develop.*
 
 plugins/viaproxy/logs/
+
+viaproxy/logs/
