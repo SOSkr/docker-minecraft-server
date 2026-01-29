@@ -5,10 +5,10 @@
 bind-address: 0.0.0.0:19132
 
 # The address of the server ViaProxy should connect to.
-target-address: mc-server:25565
+target-address: mc-community:25565
 
 # The version ViaProxy should translate to. (See ViaProxy GUI for a list of versions)
-target-version: Auto Detect (1.7+ servers)
+target-version: 1.21.4-1.21.11
 
 # The connect timeout for backend server connections in milliseconds.
 connect-timeout: 8000
