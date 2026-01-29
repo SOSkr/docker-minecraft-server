@@ -10,26 +10,32 @@ services:
         ¡Únete y juega con otros miembros de la comunidad!
       TYPE: ${MC_TYPE:-FABRIC}
       MEMORY: ${MC_MEMORY:-6G}
-      SERVER_NAME: ${MC_SERVER_NAME:-Rivalez Community}
-      GAMEMODE: ${MC_GAMEMODE:-survival}
-      DIFFICULTY: ${MC_DIFFICULTY:-hard}
+      SERVER_NAME: "Rivalez Community"
+      GAMEMODE: "${MC_GAMEMODE:-survival}"
+      DIFFICULTY: "${MC_DIFFICULTY:-hard}"
       ALLOW_CHEATS: "false"
-      MAX_PLAYERS: ${MC_MAX_PLAYERS:-15}
+      MAX_PLAYERS: 15
       ONLINE_MODE: "true"
       PLAYER_IDLE_TIMEOUT: 30
       WORLD: /worlds-community
-      ENFORCE_SECURE_PROFILE: "false"
       MODRINTH_PROJECTS: |
         fabric-api
         floodgate
       VERSION_FROM_MODRINTH_PROJECTS: false
+      SEED: "-1348783667235587485"
+      JVM_OPTS: "-javaagent:/authhook/ViaProxyAuthHook-Agent-1.0.1.jar"
+      # OPS: |
+      #   .SOSkr
+      #   SrSOSkr
+      ENFORCE_SECURE_PROFILE: "false"
+      # FORCE_WORLD_COPY: "TRUE"
     ports:
       - "${MC_PORT:-25566}:25565"
     volumes:
       - data-community:/data
       - /home/minecraft/javaworld-community:/worlds-community:ro,z
-      # - /home/minecraft/plugins/jars:/data/plugins-jars
-      # - /home/minecraft/plugins/configs:/data/plugins
+      - ./authhook:/authhook:ro
+      - ./authhook/auth_hook.properties:/data/auth_hook.properties:ro
     stdin_open: true
     tty: true
     restart: unless-stopped
@@ -39,17 +45,15 @@ services:
   viaproxy:
     image: ghcr.io/viaversion/viaproxy:latest
     ports:
-      - "${MC_BEDROCK_PORT:-25568}:25568/udp"
+      - "${MC_BEDROCK_PORT:-19133}:19132/udp"
     volumes:
       - data-community:/data:ro
-      - ./plugins/viaproxy:/app/run
-      # - ./scripts/pre-viaproxy-tasks.sh:/pre-viaproxy-tasks.sh:ro
+      - ./viaproxy:/app/run
     stdin_open: true
     tty: true
     restart: unless-stopped
     networks:
       - mcnet-community
-    #entrypoint: ["/pre-viaproxy-tasks.sh"]
     depends_on:
       mc-community:
         condition: service_healthy

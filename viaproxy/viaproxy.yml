@@ -8,7 +8,7 @@ bind-address: 0.0.0.0:19132
 target-address: mc-server:25565
 
 # The version ViaProxy should translate to. (See ViaProxy GUI for a list of versions)
-target-version: 1.21.11
+target-version: Auto Detect (1.7+ servers)
 
 # The connect timeout for backend server connections in milliseconds.
 connect-timeout: 8000
@@ -20,7 +20,7 @@ proxy-online-mode: true
 # The authentication method to use for joining the target server.
 # none: No authentication (Offline mode)
 # account: Use an account for joining the target server. (Has to be configured in ViaProxy GUI)
-auth-method: ACCOUNT
+auth-method: AUTH_HOOK
 
 # The GUI account list index (0 indexed) of the account if the auth method is set to account.
 minecraft-account-index: 0
