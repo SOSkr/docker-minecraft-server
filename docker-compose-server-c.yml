@@ -1,6 +1,6 @@
 services:
   mc-community:
-    image: itzg/minecraft-server
+    image: itzg/minecraft-server:java25
     user: "1000"
     environment:
       VERSION: ${MC_VERSION:-1.21.4}
