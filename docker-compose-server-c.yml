@@ -14,19 +14,47 @@ services:
       GAMEMODE: "${MC_GAMEMODE:-survival}"
       DIFFICULTY: "${MC_DIFFICULTY:-hard}"
       ALLOW_CHEATS: "false"
-      MAX_PLAYERS: 15
       ONLINE_MODE: "true"
+      MAX_PLAYERS: 15
       PLAYER_IDLE_TIMEOUT: 30
-      WORLD: /worlds-community
+      # WORLD: /worlds-community
+      REMOVE_OLD_MODS: "true"
+      CF_API_KEY: "$2a$10$3gfPX4Vv3e8V3VT.z8XX5.T2gyyxS5QCj4qaFY108oek7LgpsF.0u"
+      CURSEFORGE_FILES: |
+        darkquesting
+        journeymap
+        mapfrontiers
       MODRINTH_PROJECTS: |
         fabric-api
         floodgate
+        chunky
+        lithium
+        ferrite-core
+        modernfix
+        scalablelux
+        krypton
+        c2me-fabric
+        servercore
+        alternate-current
+        cloth-config
+        get-it-together-drops
+        clumps
+        spark
+        visible-traders
+        item-highlighter
+        vote2sleep-mod
+        balm
+        netherportalfix
+        terralith
+        cristel-lib
+        towns-and-towers
+        crop-harvester-server
       VERSION_FROM_MODRINTH_PROJECTS: false
       SEED: "-1348783667235587485"
-      JVM_OPTS: "-javaagent:/authhook/ViaProxyAuthHook-Agent-1.0.1.jar"
-      # OPS: |
-      #   .SOSkr
-      #   SrSOSkr
+      JVM_OPTS: "-XX:MinHeapFreeRatio=20 -XX:MaxHeapFreeRatio=40 -javaagent:/authhook/ViaProxyAuthHook-Agent-1.0.1.jar"
+      OPS: |
+        SrSOSkr
+      # .SOSkr
       ENFORCE_SECURE_PROFILE: "false"
       # FORCE_WORLD_COPY: "TRUE"
     ports:
