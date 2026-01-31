@@ -23,6 +23,7 @@ services:
       CURSEFORGE_FILES: |
         darkquesting
         journeymap
+        forge-config-api-port
         mapfrontiers
       MODRINTH_PROJECTS: |
         fabric-api
